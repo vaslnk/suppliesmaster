@@ -6,7 +6,7 @@ from google.oauth2.service_account import Credentials
 
 app = Flask(__name__)
 
-# Google Sheets setup
+# Google Sheets setup .
 SCOPE = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 SERVICE_ACCOUNT_FILE = 'suppliersmaster-697acdbd6c87.json'
 
