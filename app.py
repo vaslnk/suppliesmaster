@@ -27,37 +27,50 @@ def home():
     # Fetch all the records
     records = worksheet.get_all_records()
     
-    # Basic HTML table format for displaying the records
+    # Enhanced HTML with Bootstrap for styling
     table_html = """
-    <html>
-        <head>
-            <title>Google Sheets Data</title>
-            <style>
-                body { font-family: Arial, sans-serif; margin: 40px; }
-                h2 { color: #333; }
-                table { border-collapse: collapse; width: 100%; }
-                th, td { text-align: left; padding: 8px; }
-                tr:nth-child(even) { background-color: #f2f2f2; }
-                th { background-color: #4CAF50; color: white; }
-            </style>
-        </head>
-        <body>
-            <h2>Google Sheets Data</h2>
-            <table>
-                <tr>
-                    {% for header in records[0].keys() %}
-                    <th>{{ header }}</th>
-                    {% endfor %}
-                </tr>
-                {% for row in records %}
-                <tr>
-                    {% for cell in row.values() %}
-                    <td>{{ cell }}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </table>
-        </body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Suppliers Data</title>
+        <!-- Include Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body { padding: 20px; }
+            .table-container { margin-top: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h2 class="my-4">Suppliers Data</h2>
+            <div class="table-container">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            {% for header in records[0].keys() %}
+                            <th scope="col">{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in records %}
+                        <tr>
+                            {% for cell in row.values() %}
+                            <td>{{ cell }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Include Bootstrap JS and its dependencies -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
     </html>
     """
     
