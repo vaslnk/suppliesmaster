@@ -8,8 +8,11 @@ app = Flask(__name__)
 SCOPE = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 SERVICE_ACCOUNT_FILE = 'suppliersmaster-697acdbd6c87.json'
 
-credentials = Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE, scopes=SCOPE)
+#credentials = Credentials.from_service_account_file(
+#        SERVICE_ACCOUNT_FILE, scopes=SCOPE)
+# Convert the string from the environment variable back into a dictionary
+service_account_info = json.loads(os.environ.get('GOOGLE_CREDENTIALS').replace('\\n', '\n'))
+credentials = Credentials.from_service_account_info(service_account_info, scopes=SCOPE)
 
 gc = gspread.authorize(credentials)
 
