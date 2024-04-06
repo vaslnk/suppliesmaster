@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, render_template_string
 import gspread
 import json
@@ -22,10 +24,25 @@ gc = gspread.authorize(credentials)
 spreadsheet_id = '19vp-zb0XbdlpGozwSSjI6bpn_XNki_yiDQYNlqUVEK4'
 worksheet = gc.open_by_key(spreadsheet_id).get_worksheet(2)
 
+
+def make_urls_clickable(text):
+    # Regular expression to find URLs in text
+    url_pattern = re.compile(r'https?://\S+')
+
+    # Replace URLs with clickable links
+    return url_pattern.sub(lambda x: f'<a href="{x.group()}">{x.group()}</a>', text)
+
+
 @app.route('/')
 def home():
     # Fetch all the records
     records = worksheet.get_all_records()
+
+    # Convert URLs in records to clickable links
+    for row in records:
+        for key, value in row.items():
+            if isinstance(value, str) and 'http' in value:
+                row[key] = make_urls_clickable(value)
     
     # Enhanced HTML with Bootstrap for styling
     table_html = """
@@ -60,7 +77,7 @@ def home():
                             {% for row in records %}
                             <tr>
                                 {% for cell in row.values() %}
-                                <td>{{ cell }}</td>
+                                <td>{{ cell | safe }}</td>
                                 {% endfor %}
                             </tr>
                             {% endfor %}
