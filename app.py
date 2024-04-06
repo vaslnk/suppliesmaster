@@ -20,7 +20,7 @@ gc = gspread.authorize(credentials)
 
 # Open the spreadsheet by ID
 spreadsheet_id = '19vp-zb0XbdlpGozwSSjI6bpn_XNki_yiDQYNlqUVEK4'
-worksheet = gc.open_by_key(spreadsheet_id).sheet1
+worksheet = gc.open_by_key(spreadsheet_id).get_worksheet(2)
 
 @app.route('/')
 def home():
@@ -29,79 +29,68 @@ def home():
     
     # Enhanced HTML with Bootstrap for styling
     table_html = """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Suppliers Data</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-            body { padding: 20px; }
-            .table-container { margin-top: 20px; }
-        </style>
-    </head>
-    <body>
-        <div class="container-fluid">
-            <h2 class="my-4">Suppliers Data</h2>
-            <input type="text" id="filterInput" placeholder="Filter by keyword" class="form-control mb-3">
-            <button onclick="filterTable()" class="btn btn-primary mb-3">Filter</button>
-            <div class="table-container">
-                <table class="table table-bordered table-hover" id="dataTable">
-                    <thead class="thead-dark">
-                        <tr>
-                            {% for header in records[0].keys() %}
-                            <th scope="col">{{ header }}</th>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Suppliers Data</title>
+            <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+            <style>
+                body { padding: 20px; }
+                .table-container { margin-top: 20px; }
+            </style>
+        </head>
+        <body>
+            <div class="container-fluid">
+                <h2 class="my-4">Suppliers Data</h2>
+                <div class="table-container">
+                    <table class="table table-bordered table-hover" id="dataTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                {% for header in records[0].keys() %}
+                                <th scope="col">
+                                    {{ header }}
+                                    <input type="text" class="form-control filter-input" data-column="{{ loop.index0 }}" placeholder="Filter">
+                                </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in records %}
+                            <tr>
+                                {% for cell in row.values() %}
+                                <td>{{ cell }}</td>
+                                {% endfor %}
+                            </tr>
                             {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in records %}
-                        <tr>
-                            {% for cell in row.values() %}
-                            <td>{{ cell }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <script>
-        function filterTable() {
-            var input, filter, table, tr, td, i, j, txtValue, found;
-            input = document.getElementById("filterInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("dataTable");
-            tr = table.getElementsByTagName("tr");
-
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td");
-                found = false;
-                for (j = 0; j < td.length; j++) {
-                    if (td[j]) {
-                        txtValue = td[j].textContent || td[j].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            found = true;
-                            break; // Stop looking through the rest of the cells in this row as we found a match
-                        }
-                    }
-                }
-                if (found) {
-                    tr[i].style.display = "";
-                } else if (!tr[i].classList.contains('thead-dark')) { // Skip the header row for hiding
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-        </script>
-        <!-- Bootstrap JS and dependencies -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </body>
-    </html>
-    """
+            <!-- Bootstrap JS and dependencies -->
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('.filter-input').on('keyup', function() {
+                        var columnIndex = $(this).data('column');
+                        var filterValue = $(this).val().toUpperCase();
+                        $('#dataTable tbody tr').each(function() {
+                            var cellText = $(this).find('td').eq(columnIndex).text().toUpperCase();
+                            if (cellText.indexOf(filterValue) > -1) {
+                                $(this).show();
+                            } else {
+                                $(this).hide();
+                            }
+                        });
+                    });
+                });
+            </script>
+        </body>
+        </html>
+        """
 
     return render_template_string(table_html, records=records)
 
