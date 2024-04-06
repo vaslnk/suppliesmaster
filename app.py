@@ -35,7 +35,6 @@ def home():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Suppliers Data</title>
-        <!-- Include Bootstrap CSS -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
             body { padding: 20px; }
@@ -45,8 +44,10 @@ def home():
     <body>
         <div class="container-fluid">
             <h2 class="my-4">Suppliers Data</h2>
+            <input type="text" id="filterInput" placeholder="Filter by keyword" class="form-control mb-3">
+            <button onclick="filterTable()" class="btn btn-primary mb-3">Filter</button>
             <div class="table-container">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="dataTable">
                     <thead class="thead-dark">
                         <tr>
                             {% for header in records[0].keys() %}
@@ -66,14 +67,42 @@ def home():
                 </table>
             </div>
         </div>
-        <!-- Include Bootstrap JS and its dependencies -->
+        <script>
+        function filterTable() {
+            var input, filter, table, tr, td, i, j, txtValue, found;
+            input = document.getElementById("filterInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("dataTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                found = false;
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                            break; // Stop looking through the rest of the cells in this row as we found a match
+                        }
+                    }
+                }
+                if (found) {
+                    tr[i].style.display = "";
+                } else if (!tr[i].classList.contains('thead-dark')) { // Skip the header row for hiding
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+        </script>
+        <!-- Bootstrap JS and dependencies -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
     </html>
     """
-    
+
     return render_template_string(table_html, records=records)
 
 if __name__ == '__main__':
