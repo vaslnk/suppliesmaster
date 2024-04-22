@@ -38,6 +38,9 @@ def home():
                 font-weight: bold;
                 color: navy; /* Highlight color for the current page */
             }
+            .nav-right {
+                float: right;
+            }
         </style>
         <script>
             function changeIframe(url, element) {
@@ -57,6 +60,7 @@ def home():
             <div class="nav mb-3">
                 <a onclick="changeIframe('http://localhost/public/grid/drwX450lPian4lwKqyaj5WxqO2Sj1Xv0AYnkaZ6ydTQ', this)" class="nav-link active">⏰ Supplier Tracker</a>
                 <a onclick="changeIframe('http://localhost/form/05yM-256TOWVGMe4FtPCwm6TOs7UYknsyRXAYy0I9Cw', this)" class="nav-link">📥 Add a Supplier</a>
+                <a href="https://docs.google.com/spreadsheets/d/19vp-zb0XbdlpGozwSSjI6bpn_XNki_yiDQYNlqUVEK4/edit?usp=sharing" class="nav-link nav-right" target="_blank">🕵️‍♀️ Fix Incorrect Info</a>
             </div>
             <!-- Divider line -->
             <hr>
