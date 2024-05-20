@@ -15,6 +15,9 @@ def home():
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
             body { padding: 20px; }
+            body, html {
+              width: 100%; // or body { width: 960px; } if you're using a fixed width
+            }
             .iframe-container { 
                 position: relative;
                 overflow: hidden;
@@ -30,6 +33,21 @@ def home():
                 width: 100%;
                 height: 100%;
                 border: none;
+            }
+            @media (max-width: 768px) {
+                .iframe-container {
+                    position: relative;
+                    width: 200vw;
+                    height: 200vw;
+                }
+                .responsive-iframe {
+                    position: relative;
+                    width: 200vw;
+                    height: 200vw;
+                    border: none;
+                    transform: scale(0.5);
+                    transform-origin: 0 0;
+                }
             }
             .nav-link {
                 cursor: pointer;
@@ -65,7 +83,7 @@ def home():
             <!-- Divider line -->
             <hr>
             <div class="iframe-container">
-                <iframe id="main-iframe" src="https://baserow.io/public/grid/4mupvSXIVPtgzNvRy7ULqoxGRw2DfFg3CUbAB9YWgRI" frameborder="0"></iframe>
+                <iframe class="responsive-iframe" id="main-iframe" src="https://baserow.io/public/grid/4mupvSXIVPtgzNvRy7ULqoxGRw2DfFg3CUbAB9YWgRI" frameborder="0"></iframe>
             </div>
         </div>
         <!-- Bootstrap JS and dependencies -->
