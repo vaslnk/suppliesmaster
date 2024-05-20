@@ -58,14 +58,14 @@ def home():
             <h2 class="my-4">Suppliers Data</h2>
             <!-- Navigation Links -->
             <div class="nav mb-3">
-                <a onclick="changeIframe('http://localhost/public/grid/drwX450lPian4lwKqyaj5WxqO2Sj1Xv0AYnkaZ6ydTQ', this)" class="nav-link active">⏰ Supplier Tracker</a>
-                <a onclick="changeIframe('http://localhost/form/05yM-256TOWVGMe4FtPCwm6TOs7UYknsyRXAYy0I9Cw', this)" class="nav-link">📥 Add a Supplier</a>
+                <a onclick="changeIframe('https://baserow.io/public/grid/4mupvSXIVPtgzNvRy7ULqoxGRw2DfFg3CUbAB9YWgRI', this)" class="nav-link active">⏰ Supplier Tracker</a>
+                <a onclick="changeIframe('https://baserow.io/form/Y1MUYeYBSqhYcrSvO-7DAGhwefCCLj8B9ZY5khZGQ8U', this)" class="nav-link">📥 Add a Supplier</a>
                 <a href="https://docs.google.com/spreadsheets/d/19vp-zb0XbdlpGozwSSjI6bpn_XNki_yiDQYNlqUVEK4/edit?usp=sharing" class="nav-link nav-right" target="_blank">🕵️‍♀️ Fix Incorrect Info</a>
             </div>
             <!-- Divider line -->
             <hr>
             <div class="iframe-container">
-                <iframe id="main-iframe" src="http://localhost/public/grid/drwX450lPian4lwKqyaj5WxqO2Sj1Xv0AYnkaZ6ydTQ" frameborder="0"></iframe>
+                <iframe id="main-iframe" src="https://baserow.io/public/grid/4mupvSXIVPtgzNvRy7ULqoxGRw2DfFg3CUbAB9YWgRI" frameborder="0"></iframe>
             </div>
         </div>
         <!-- Bootstrap JS and dependencies -->
