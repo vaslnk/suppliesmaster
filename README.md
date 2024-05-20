@@ -19,7 +19,17 @@ pip install -r requirements.txt
 
 # Running the App
 ```shell
-# Get baserow backend Docker software running in background
+# for auto-reload in local dev (do not run in production)
+export FLASK_ENV=development
+
+# run the app
+flask run
+```
+
+## Optional
+We run baserow from the cloud now. But if you want to try localhost baeserow:
+```
+# Get baserow backend Docker software running in localhost background
 docker run \
   -d \
   --name baserow \
@@ -29,10 +39,4 @@ docker run \
   -p 443:443 \
   --restart unless-stopped \
   baserow/baserow:1.24.2
-
-# for auto-reload in local dev (do not run in production)
-export FLASK_ENV=development
-
-# run the app
-flask run
 ```
