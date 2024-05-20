@@ -24,7 +24,7 @@ def home():
                 width: 100%;
                 padding-top: 56.25%; /* 16:9 Aspect Ratio */
             }
-            .iframe-container iframe {
+            .responsive-iframe {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -37,12 +37,16 @@ def home():
             @media (max-width: 768px) {
                 .iframe-container {
                     position: relative;
-                    width: 200vw;
-                    height: 200vw;
+                    width: 100%;
+                    height: 500px;
                 }
                 .responsive-iframe {
-                    position: relative;
-                    width: 200vw;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    position: absolute;
+                    width: 768px;
                     height: 200vw;
                     border: none;
                     transform: scale(0.5);
