@@ -46,8 +46,8 @@ def home():
                     bottom: 0;
                     right: 0;
                     position: absolute;
-                    width: 768px;
-                    height: 200vw;
+                    width: 200%;
+                    height: 200%;
                     border: none;
                     transform: scale(0.5);
                     transform-origin: 0 0;
